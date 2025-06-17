@@ -365,58 +365,144 @@ header {
 }
 
 .portfolio {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1em;
+    display: flex;
+    flex-direction: column;
     max-width: 1200px;
     margin: 0 auto;
+    gap: 3em; /* Increased spacing between projects */
 }
 
 .portfolio__item {
-    background: var(--clr-accent);
-    overflow: hidden;
+    background: var(--clr-light);
     border-radius: 8px;
     box-shadow: var(--bs);
-    transition: transform 200ms ease-in-out;
-    position: relative;
-    padding: 1.5em;
-    color: var(--clr-dark);
-    text-decoration: none;
-    height: 300px;
+    overflow: hidden;
+    transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
     display: flex;
     flex-direction: column;
+    height: auto;
+    color: var(--clr-dark);
+    text-decoration: none;
+    width: 100%;
+    cursor: pointer;
 }
 
 .portfolio__item:hover,
 .portfolio__item:focus {
-    transform: scale(1.05);
+    transform: scale(1.02);
+    box-shadow: 0 6px 30px rgba(0,0,0,0.2);
 }
 
-.portfolio__loading {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 2em;
-    font-size: var(--fs-h3);
+/* Add a subtle indicator that the item is clickable */
+.portfolio__github-indicator {
+    margin-top: auto;
+    padding-top: 1em;
+    color: var(--clr-accent);
     font-weight: var(--fw-bold);
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 1rem;
+    opacity: 0.8;
+    transition: opacity 150ms ease;
+}
+
+.portfolio__item:hover .portfolio__github-indicator,
+.portfolio__item:focus .portfolio__github-indicator {
+    opacity: 1;
+}
+
+/* Make sure the title has a hover effect too */
+.portfolio__item:hover .portfolio__title,
+.portfolio__item:focus .portfolio__title {
+    color: var(--clr-accent);
+    transition: color 150ms ease;
+}
+
+/* Remove the old button styles since we don't need them */
+.portfolio__link {
+    display: none;
+}
+
+.portfolio__media {
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    position: relative;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+.portfolio__image,
+.portfolio__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.portfolio__content {
+    padding: 2em; /* Increased padding */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .portfolio__title {
-    font-size: var(--fs-h3);
-    margin-bottom: 0.5em;
+    margin: 0 0 0.5em;
+    font-size: 1.8rem; /* Larger title */
+    color: var(--clr-dark);
 }
 
 .portfolio__description {
-    flex-grow: 1;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
+    margin: 0 0 1.5em;
+    line-height: 1.6;
+    font-size: 1.1rem; /* Larger description text */
 }
 
 .portfolio__tech {
-    margin-top: 1em;
-    font-size: 0.9em;
+    font-size: 1rem; /* Larger tech text */
+    color: var(--clr-accent);
     font-weight: var(--fw-bold);
+    margin-bottom: 1.5em;
+}
+
+/* For large screens, make media larger */
+@media (min-width: 800px) {
+    .portfolio__item {
+        flex-direction: column; /* Keep stacked layout for emphasis on media */
+        max-width: 900px; /* Limit width for readability */
+        margin: 0 auto;
+    }
+    
+    .portfolio__media {
+        width: 100%;
+        padding-bottom: 56.25%; /* Maintain 16:9 aspect ratio */
+    }
+    
+    /* Alternate content and media position for visual interest */
+    .portfolio__item:nth-child(even) {
+        align-self: flex-end;
+    }
+    
+    .portfolio__item:nth-child(odd) {
+        align-self: flex-start;
+    }
+}
+
+/* Optional: Add an even larger display for extra large screens */
+@media (min-width: 1200px) {
+    .portfolio__media {
+        height: 0;
+        padding-bottom: 50%; /* Slightly flatter, more cinematic ratio */
+    }
+    
+    .portfolio__title {
+        font-size: 2rem;
+    }
 }
 
 /* Footer */
